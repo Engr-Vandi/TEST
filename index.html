@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Aurum Grand Hotel — Where Luxury Meets Serenity</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FAF7F0;
+  --cream2:#F5EFE4;
+  --cream3:#EDE3D4;
+  --sand:#D9C9B0;
+  --gold:#C4975A;
+  --gold-dark:#A07A40;
+  --gold-light:#E8C98A;
+  --brown:#3E2A1A;
+  --brown-mid:#6B4C30;
+  --brown-light:#9B7355;
+  --text:#2A1A0E;
+  --text-mid:#5C3D20;
+  --text-muted:#9B7355;
+  --white:#FFFDF8;
+  --border:#DDD0BC;
+  --font-display:'Cormorant Garamond',Georgia,serif;
+  --font-body:'Jost',sans-serif;
+  --transition:0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--cream);color:var(--text);font-family:var(--font-body);font-weight:300;line-height:1.7;overflow-x:hidden}
+img{display:block;width:100%;height:100%;object-fit:cover}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--font-body);border:none;background:none}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--cream2)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.5rem 4rem;display:flex;align-items:center;justify-content:space-between;transition:var(--transition)}
+nav.scrolled{background:rgba(250,247,240,0.97);backdrop-filter:blur(12px);padding:1rem 4rem;box-shadow:0 1px 0 var(--border)}
+.nav-logo{font-family:var(--font-display);font-size:1.6rem;font-weight:500;letter-spacing:0.05em;color:var(--white)}
+nav.scrolled .nav-logo{color:var(--brown)}
+.nav-links{display:flex;gap:2.5rem;align-items:center}
+.nav-links a{font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,253,248,0.85);transition:color 0.3s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold-light);transition:width 0.3s}
+.nav-links a:hover::after{width:100%}
+nav.scrolled .nav-links a{color:var(--text-mid)}
+nav.scrolled .nav-links a::after{background:var(--gold)}
+.nav-book{padding:0.6rem 1.6rem;border:1px solid rgba(255,253,248,0.5);font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--white);transition:var(--transition);border-radius:1px}
+.nav-book:hover{background:var(--gold);border-color:var(--gold)}
+nav.scrolled .nav-book{border-color:var(--gold);color:var(--gold)}
+nav.scrolled .nav-book:hover{background:var(--gold);color:var(--white)}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.nav-hamburger span{display:block;width:24px;height:1.5px;background:var(--white);transition:var(--transition)}
+nav.scrolled .nav-hamburger span{background:var(--brown)}
+.mobile-menu{display:none;position:fixed;inset:0;background:var(--cream);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:var(--font-display);font-size:2rem;font-weight:400;color:var(--brown);letter-spacing:0.05em}
+.mobile-menu a:hover{color:var(--gold)}
+.mobile-close{position:absolute;top:2rem;right:2rem;font-size:2rem;color:var(--brown-light);cursor:pointer}
+
+/* ── HERO ── */
+.hero{position:relative;height:100vh;min-height:680px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#5C3A1E 0%,#3E2A1A 30%,#7A5230 60%,#C4975A 100%);z-index:0}
+.hero-pattern{position:absolute;inset:0;opacity:0.08;background-image:repeating-linear-gradient(45deg,var(--gold) 0,var(--gold) 1px,transparent 0,transparent 50%);background-size:20px 20px;z-index:1}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(42,26,14,0.3) 0%,rgba(42,26,14,0.1) 50%,rgba(42,26,14,0.5) 100%);z-index:2}
+.hero-content{position:relative;z-index:3;text-align:center;color:var(--white);padding:2rem}
+.hero-tag{font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-light);margin-bottom:1.5rem;opacity:0;animation:fadeUp 1s 0.3s forwards}
+.hero-title{font-family:var(--font-display);font-size:clamp(3.5rem,8vw,7rem);font-weight:300;line-height:1.05;letter-spacing:0.02em;margin-bottom:1.5rem;opacity:0;animation:fadeUp 1s 0.5s forwards}
+.hero-title em{font-style:italic;color:var(--gold-light)}
+.hero-subtitle{font-size:0.95rem;font-weight:300;letter-spacing:0.1em;color:rgba(255,253,248,0.8);max-width:480px;margin:0 auto 3rem;opacity:0;animation:fadeUp 1s 0.7s forwards}
+.hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s 0.9s forwards}
+.btn-primary{padding:1rem 2.5rem;background:var(--gold);color:var(--white);font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;transition:var(--transition);border-radius:1px}
+.btn-primary:hover{background:var(--gold-dark);transform:translateY(-2px)}
+.btn-outline{padding:1rem 2.5rem;border:1px solid rgba(255,253,248,0.5);color:var(--white);font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;transition:var(--transition);border-radius:1px}
+.btn-outline:hover{background:rgba(255,253,248,0.1);border-color:var(--gold-light)}
+.hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:0.5rem;color:rgba(255,253,248,0.6);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;opacity:0;animation:fadeUp 1s 1.2s forwards}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold-light),transparent);animation:scrollPulse 2s infinite}
+
+/* ── BOOKING BAR ── */
+.booking-bar{background:var(--white);border-bottom:1px solid var(--border);padding:1.5rem 4rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;position:sticky;top:0;z-index:900;box-shadow:0 4px 20px rgba(62,42,26,0.08)}
+.booking-field{display:flex;flex-direction:column;flex:1;min-width:140px}
+.booking-field label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.3rem}
+.booking-field input,.booking-field select{border:none;border-bottom:1px solid var(--border);padding:0.3rem 0;font-family:var(--font-body);font-size:0.9rem;color:var(--text);background:transparent;outline:none;transition:border-color 0.3s}
+.booking-field input:focus,.booking-field select:focus{border-bottom-color:var(--gold)}
+.booking-sep{width:1px;height:40px;background:var(--border);flex-shrink:0}
+.booking-submit{padding:0.9rem 2rem;background:var(--gold);color:var(--white);font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;transition:var(--transition);border-radius:1px;white-space:nowrap;flex-shrink:0}
+.booking-submit:hover{background:var(--gold-dark)}
+
+/* ── SECTIONS ── */
+section{padding:7rem 4rem}
+.section-tag{font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.section-title{font-family:var(--font-display);font-size:clamp(2.2rem,4vw,3.5rem);font-weight:400;line-height:1.15;color:var(--brown);margin-bottom:1.5rem}
+.section-title em{font-style:italic;color:var(--gold)}
+.section-desc{font-size:0.95rem;color:var(--text-muted);max-width:520px;line-height:1.8}
+.divider{width:60px;height:1px;background:var(--gold);margin:2rem 0}
+
+/* ── ABOUT ── */
+.about{background:var(--white)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;max-width:1200px;margin:0 auto}
+.about-visual{position:relative;height:520px}
+.about-img-main{position:absolute;inset:0;border-radius:2px;overflow:hidden;background:linear-gradient(135deg,#C4975A,#8B6535,#5C3A1E)}
+.about-img-inset{position:absolute;width:200px;height:260px;bottom:-2rem;right:-2rem;border-radius:2px;overflow:hidden;background:linear-gradient(135deg,#E8C98A,#C4975A,#8B6535);border:6px solid var(--white)}
+.about-badge{position:absolute;top:2rem;left:-2rem;background:var(--gold);color:var(--white);padding:1.5rem;text-align:center;z-index:2}
+.about-badge .num{font-family:var(--font-display);font-size:2.5rem;font-weight:300;display:block;line-height:1}
+.about-badge .lbl{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;opacity:0.9}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem}
+.stat{padding:1.2rem;background:var(--cream2);border-left:2px solid var(--gold)}
+.stat .num{font-family:var(--font-display);font-size:2rem;font-weight:400;color:var(--brown)}
+.stat .lbl{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted)}
+.about-img-decor{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;color:rgba(255,253,248,0.2);font-family:var(--font-display);font-size:8rem;font-weight:300;font-style:italic}
+.about-img-inset-decor{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,253,248,0.3);font-family:var(--font-display);font-size:4rem;font-style:italic}
+
+/* ── ROOMS ── */
+.rooms{background:var(--cream2)}
+.rooms-header{display:flex;justify-content:space-between;align-items:flex-end;max-width:1200px;margin:0 auto 4rem;flex-wrap:wrap;gap:2rem}
+.rooms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1200px;margin:0 auto}
+.room-card{background:var(--white);overflow:hidden;border-radius:2px;transition:transform 0.4s,box-shadow 0.4s;cursor:pointer}
+.room-card:hover{transform:translateY(-8px);box-shadow:0 20px 60px rgba(62,42,26,0.15)}
+.room-img{height:260px;position:relative;overflow:hidden}
+.room-img-bg{width:100%;height:100%;transition:transform 0.6s ease;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:5rem;font-style:italic;color:rgba(255,253,248,0.3)}
+.room-card:hover .room-img-bg{transform:scale(1.05)}
+.room-badge{position:absolute;top:1rem;right:1rem;background:var(--gold);color:var(--white);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.3rem 0.8rem}
+.room-info{padding:1.5rem}
+.room-type{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem}
+.room-name{font-family:var(--font-display);font-size:1.5rem;font-weight:400;color:var(--brown);margin-bottom:0.8rem}
+.room-desc{font-size:0.85rem;color:var(--text-muted);margin-bottom:1.2rem;line-height:1.7}
+.room-features{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.room-feat{font-size:0.7rem;letter-spacing:0.05em;color:var(--brown-light);display:flex;align-items:center;gap:0.3rem}
+.room-feat::before{content:'✦';font-size:0.5rem;color:var(--gold)}
+.room-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:1.2rem}
+.room-price{font-family:var(--font-display);font-size:1.3rem;color:var(--brown)}
+.room-price span{font-family:var(--font-body);font-size:0.7rem;color:var(--text-muted);font-weight:300}
+.room-cta{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid transparent;transition:border-color 0.3s}
+.room-cta:hover{border-bottom-color:var(--gold)}
+
+/* ── AMENITIES ── */
+.amenities{background:var(--cream3)}
+.amenities-inner{max-width:1200px;margin:0 auto}
+.amenities-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:4rem}
+.amenity{text-align:center;padding:2.5rem 1.5rem;background:var(--white);border-radius:2px;transition:var(--transition);border-bottom:2px solid transparent}
+.amenity:hover{transform:translateY(-6px);border-bottom-color:var(--gold);box-shadow:0 12px 40px rgba(62,42,26,0.1)}
+.amenity-icon{font-size:2.5rem;margin-bottom:1rem;line-height:1}
+.amenity-name{font-family:var(--font-display);font-size:1.15rem;font-weight:400;color:var(--brown);margin-bottom:0.5rem}
+.amenity-desc{font-size:0.8rem;color:var(--text-muted);line-height:1.7}
+
+/* ── EXPERIENCE STRIP ── */
+.experience{background:var(--brown);padding:6rem 4rem;text-align:center}
+.experience-inner{max-width:800px;margin:0 auto}
+.experience .section-tag{color:var(--gold-light)}
+.experience .section-title{color:var(--cream);margin-bottom:2rem}
+.experience p{color:rgba(250,247,240,0.7);font-size:0.95rem;margin-bottom:3rem;max-width:500px;margin-left:auto;margin-right:auto}
+.experience .btn-primary{display:inline-block}
+
+/* ── GALLERY ── */
+.gallery{background:var(--white)}
+.gallery-inner{max-width:1200px;margin:0 auto}
+.gallery-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:1rem}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,220px);gap:1rem}
+.gallery-item{overflow:hidden;border-radius:2px;cursor:pointer;position:relative}
+.gallery-item:nth-child(1){grid-column:span 2;grid-row:span 2}
+.gallery-item:nth-child(4){grid-column:span 2}
+.gallery-bg{width:100%;height:100%;transition:transform 0.5s ease;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:3rem;font-style:italic;color:rgba(255,253,248,0.25)}
+.gallery-item:hover .gallery-bg{transform:scale(1.08)}
+.gallery-overlay{position:absolute;inset:0;background:rgba(42,26,14,0);transition:background 0.3s;display:flex;align-items:center;justify-content:center}
+.gallery-item:hover .gallery-overlay{background:rgba(42,26,14,0.3)}
+.gallery-overlay span{color:var(--white);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;opacity:0;transition:opacity 0.3s;font-weight:400}
+.gallery-item:hover .gallery-overlay span{opacity:1}
+
+/* ── TESTIMONIALS ── */
+.testimonials{background:var(--cream2);text-align:center}
+.testimonials-inner{max-width:900px;margin:0 auto}
+.testimonials-slider{position:relative;overflow:hidden;margin-top:4rem}
+.testimonial-track{display:flex;transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)}
+.testimonial-slide{min-width:100%;padding:0 2rem}
+.testimonial-quote{font-family:var(--font-display);font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:300;font-style:italic;color:var(--brown);line-height:1.5;margin-bottom:2rem}
+.testimonial-quote::before{content:'\201C';font-size:4rem;color:var(--gold);line-height:0;vertical-align:-1.5rem;margin-right:0.3rem;font-family:Georgia,serif}
+.testimonial-author{display:flex;flex-direction:column;align-items:center;gap:0.3rem}
+.testimonial-name{font-size:0.85rem;font-weight:500;letter-spacing:0.1em;color:var(--brown-mid)}
+.testimonial-origin{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted)}
+.testimonial-stars{color:var(--gold);font-size:0.8rem;letter-spacing:0.1em;margin-bottom:0.5rem}
+.slider-dots{display:flex;justify-content:center;gap:0.6rem;margin-top:3rem}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--sand);transition:var(--transition);cursor:pointer;border:none}
+.dot.active{background:var(--gold);width:24px;border-radius:4px}
+.slider-arrows{display:flex;justify-content:center;gap:1rem;margin-top:1.5rem}
+.arrow{width:44px;height:44px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--brown-light);transition:var(--transition);cursor:pointer;border-radius:50%}
+.arrow:hover{background:var(--gold);color:var(--white);border-color:var(--gold)}
+
+/* ── CONTACT ── */
+.contact{background:var(--white)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;max-width:1200px;margin:0 auto;align-items:start}
+.contact-info{padding-top:1rem}
+.contact-items{display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem}
+.contact-item{display:flex;gap:1rem;align-items:flex-start}
+.contact-item-icon{width:40px;height:40px;background:var(--cream2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;border-radius:1px}
+.contact-item-text h4{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.2rem}
+.contact-item-text p{font-size:0.9rem;color:var(--text-muted)}
+.contact-form{background:var(--cream2);padding:3rem;border-radius:2px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-group{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1.2rem}
+.form-group label{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted)}
+.form-group input,.form-group textarea,.form-group select{padding:0.8rem 1rem;border:1px solid var(--border);background:var(--white);font-family:var(--font-body);font-size:0.9rem;color:var(--text);outline:none;border-radius:1px;transition:border-color 0.3s}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--gold)}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-group select option{background:var(--white)}
+
+/* ── FOOTER ── */
+footer{background:var(--brown);color:rgba(250,247,240,0.7);padding:5rem 4rem 2rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;max-width:1200px;margin:0 auto;margin-bottom:4rem}
+.footer-brand .logo{font-family:var(--font-display);font-size:1.8rem;font-weight:400;color:var(--cream);margin-bottom:1rem;letter-spacing:0.05em}
+.footer-brand p{font-size:0.85rem;line-height:1.8;max-width:260px}
+.footer-brand .socials{display:flex;gap:0.8rem;margin-top:1.5rem}
+.social-btn{width:36px;height:36px;border:1px solid rgba(250,247,240,0.2);display:flex;align-items:center;justify-content:center;font-size:0.8rem;transition:var(--transition);border-radius:50%;color:rgba(250,247,240,0.7)}
+.social-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--white)}
+.footer-col h4{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-light);margin-bottom:1.5rem;font-weight:400}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.7rem}
+.footer-col ul li a{font-size:0.85rem;transition:color 0.3s}
+.footer-col ul li a:hover{color:var(--cream)}
+.footer-bottom{border-top:1px solid rgba(250,247,240,0.1);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;max-width:1200px;margin:0 auto;font-size:0.75rem}
+
+/* ── BACK TO TOP ── */
+.back-top{position:fixed;bottom:2rem;right:2rem;width:44px;height:44px;background:var(--gold);color:var(--white);display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:1.2rem;transition:var(--transition);opacity:0;pointer-events:none;z-index:800;cursor:pointer;box-shadow:0 4px 16px rgba(196,151,90,0.4)}
+.back-top.visible{opacity:1;pointer-events:all}
+.back-top:hover{background:var(--gold-dark);transform:translateY(-3px)}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(42,26,14,0.7);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);max-width:540px;width:90%;padding:3rem;border-radius:2px;position:relative;max-height:90vh;overflow-y:auto;animation:modalIn 0.4s ease}
+.modal-close{position:absolute;top:1rem;right:1rem;font-size:1.5rem;color:var(--text-muted);cursor:pointer;background:none;border:none;line-height:1;transition:color 0.3s}
+.modal-close:hover{color:var(--brown)}
+.modal-title{font-family:var(--font-display);font-size:2rem;color:var(--brown);margin-bottom:0.5rem}
+.modal-sub{font-size:0.8rem;color:var(--text-muted);margin-bottom:2rem;letter-spacing:0.05em}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scrollPulse{0%,100%{opacity:1;transform:scaleY(1)}50%{opacity:0.5;transform:scaleY(0.7)}}
+@keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+.reveal-delay-4{transition-delay:0.4s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .about-grid,.rooms-grid{grid-template-columns:1fr 1fr}
+  .amenities-grid{grid-template-columns:repeat(2,1fr)}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto}
+  .gallery-item:nth-child(1){grid-column:span 1;grid-row:span 1}
+  .gallery-item:nth-child(4){grid-column:span 1}
+  .contact-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .rooms-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  nav{padding:1.2rem 1.5rem}
+  nav.scrolled{padding:0.8rem 1.5rem}
+  .nav-links,.nav-book{display:none}
+  .nav-hamburger{display:flex}
+  section{padding:5rem 1.5rem}
+  .booking-bar{padding:1rem 1.5rem;flex-direction:column;align-items:stretch}
+  .booking-sep{display:none}
+  .about-grid{grid-template-columns:1fr;gap:3rem}
+  .about-visual{height:380px}
+  .about-img-inset{display:none}
+  .amenities-grid{grid-template-columns:1fr 1fr}
+  .gallery-grid{grid-template-columns:1fr 1fr}
+  .contact-form{padding:2rem}
+  .form-row{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .rooms-header{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:480px){
+  .amenities-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr}
+}
+
+/* ── ROOM BG COLORS ── */
+.room-bg-1{background:linear-gradient(135deg,#C4975A,#8B6535,#5C3A1E)}
+.room-bg-2{background:linear-gradient(135deg,#8B6535,#5C3A1E,#3E2A1A)}
+.room-bg-3{background:linear-gradient(135deg,#D4B896,#C4975A,#8B6535)}
+.gallery-bg-1{background:linear-gradient(135deg,#C4975A,#8B6535)}
+.gallery-bg-2{background:linear-gradient(135deg,#D4B896,#9B7355)}
+.gallery-bg-3{background:linear-gradient(135deg,#8B6535,#5C3A1E)}
+.gallery-bg-4{background:linear-gradient(135deg,#E8C98A,#C4975A)}
+.gallery-bg-5{background:linear-gradient(135deg,#9B7355,#6B4C30)}
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <span class="mobile-close" onclick="closeMobile()">✕</span>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#rooms" onclick="closeMobile()">Rooms</a>
+  <a href="#amenities" onclick="closeMobile()">Amenities</a>
+  <a href="#gallery" onclick="closeMobile()">Gallery</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <a href="#booking-bar" onclick="closeMobile()" style="color:var(--gold)">Book Now</a>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">Aurum Grand</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#rooms">Rooms</a>
+    <a href="#amenities">Amenities</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+    <a href="#booking-bar" class="nav-book">Book Now</a>
+  </div>
+  <div class="nav-hamburger" onclick="openMobile()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-tag">Est. 1987 · Port Harcourt, Nigeria</p>
+    <h1 class="hero-title">Where Luxury<br><em>Meets Serenity</em></h1>
+    <p class="hero-subtitle">An unrivalled sanctuary of refined comfort, world-class dining, and timeless elegance in the heart of the city.</p>
+    <div class="hero-actions">
+      <a href="#booking-bar" class="btn-primary">Reserve Your Stay</a>
+      <a href="#rooms" class="btn-outline">Explore Rooms</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- BOOKING BAR -->
+<div class="booking-bar" id="booking-bar">
+  <div class="booking-field">
+    <label>Check In</label>
+    <input type="date" id="checkIn"/>
+  </div>
+  <div class="booking-sep"></div>
+  <div class="booking-field">
+    <label>Check Out</label>
+    <input type="date" id="checkOut"/>
+  </div>
+  <div class="booking-sep"></div>
+  <div class="booking-field">
+    <label>Guests</label>
+    <select>
+      <option>1 Adult</option>
+      <option>2 Adults</option>
+      <option>2 Adults, 1 Child</option>
+      <option>2 Adults, 2 Children</option>
+      <option>3+ Adults</option>
+    </select>
+  </div>
+  <div class="booking-sep"></div>
+  <div class="booking-field">
+    <label>Room Type</label>
+    <select>
+      <option>Any Room</option>
+      <option>Deluxe Room</option>
+      <option>Executive Suite</option>
+      <option>Presidential Suite</option>
+    </select>
+  </div>
+  <button class="booking-submit" onclick="handleBooking()">Check Availability</button>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <div class="about-img-main">
+        <div class="about-img-decor">A</div>
+      </div>
+      <div class="about-img-inset">
+        <div class="about-img-inset-decor">✦</div>
+      </div>
+      <div class="about-badge">
+        <span class="num">36</span>
+        <span class="lbl">Years of<br>Excellence</span>
+      </div>
+    </div>
+    <div class="about-text">
+      <p class="section-tag reveal reveal-delay-1">Our Story</p>
+      <h2 class="section-title reveal reveal-delay-2">A Legacy of<br><em>Refined Hospitality</em></h2>
+      <div class="divider reveal reveal-delay-3"></div>
+      <p class="section-desc reveal reveal-delay-3">Since 1987, Aurum Grand Hotel has stood as a beacon of exceptional hospitality. Nestled in the heart of Port Harcourt, our hotel blends classical elegance with modern luxury — offering every guest an experience that transcends the ordinary.</p>
+      <p class="section-desc reveal reveal-delay-4" style="margin-top:1rem">From our meticulously curated rooms to our award-winning restaurant and spa, every detail has been crafted to deliver moments of pure indulgence.</p>
+      <div class="about-stats reveal">
+        <div class="stat"><div class="num">124</div><div class="lbl">Luxury Rooms &amp; Suites</div></div>
+        <div class="stat"><div class="num">4</div><div class="lbl">World-Class Restaurants</div></div>
+        <div class="stat"><div class="num">5★</div><div class="lbl">Guest Rating</div></div>
+        <div class="stat"><div class="num">18</div><div class="lbl">Premium Amenities</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<section class="rooms" id="rooms">
+  <div class="rooms-header">
+    <div>
+      <p class="section-tag reveal">Accommodations</p>
+      <h2 class="section-title reveal reveal-delay-1">Our Rooms<br><em>&amp; Suites</em></h2>
+    </div>
+    <p class="section-desc reveal" style="max-width:340px">Each room is a carefully composed sanctuary — designed to restore, inspire, and indulge.</p>
+  </div>
+  <div class="rooms-grid">
+    <div class="room-card reveal" onclick="openRoomModal('Deluxe Room','A spacious retreat with warm tones, a king-sized bed, and a private balcony overlooking the city skyline.','₦85,000')">
+      <div class="room-img"><div class="room-img-bg room-bg-1">❧</div><div class="room-badge">Available</div></div>
+      <div class="room-info">
+        <div class="room-type">Standard</div>
+        <div class="room-name">Deluxe Room</div>
+        <div class="room-desc">A warm sanctuary with clean lines, premium linen, and panoramic city views from your private balcony.</div>
+        <div class="room-features"><span class="room-feat">King Bed</span><span class="room-feat">City View</span><span class="room-feat">55" TV</span><span class="room-feat">Free WiFi</span></div>
+        <div class="room-footer"><div class="room-price">₦85,000 <span>/ night</span></div><span class="room-cta">Book Now →</span></div>
+      </div>
+    </div>
+    <div class="room-card reveal reveal-delay-2" onclick="openRoomModal('Executive Suite','A generously appointed suite with a separate living area, dining room, and premium butler service around the clock.','₦165,000')">
+      <div class="room-img"><div class="room-img-bg room-bg-2">❦</div><div class="room-badge" style="background:var(--brown)">Most Popular</div></div>
+      <div class="room-info">
+        <div class="room-type">Premium</div>
+        <div class="room-name">Executive Suite</div>
+        <div class="room-desc">Separate living and dining areas, premium minibar, walk-in closet, and complimentary butler service.</div>
+        <div class="room-features"><span class="room-feat">Living Area</span><span class="room-feat">Butler Service</span><span class="room-feat">Jacuzzi</span><span class="room-feat">Minibar</span></div>
+        <div class="room-footer"><div class="room-price">₦165,000 <span>/ night</span></div><span class="room-cta">Book Now →</span></div>
+      </div>
+    </div>
+    <div class="room-card reveal reveal-delay-4" onclick="openRoomModal('Presidential Suite','The pinnacle of luxury — a full-floor suite with private dining, a personal chef, rooftop access, and curated concierge.','₦380,000')">
+      <div class="room-img"><div class="room-img-bg room-bg-3">✦</div><div class="room-badge" style="background:var(--gold-dark)">Exclusive</div></div>
+      <div class="room-info">
+        <div class="room-type">Signature</div>
+        <div class="room-name">Presidential Suite</div>
+        <div class="room-desc">An unparalleled full-floor experience with private chef, personal concierge, and rooftop terrace access.</div>
+        <div class="room-features"><span class="room-feat">Full Floor</span><span class="room-feat">Private Chef</span><span class="room-feat">Rooftop</span><span class="room-feat">Concierge</span></div>
+        <div class="room-footer"><div class="room-price">₦380,000 <span>/ night</span></div><span class="room-cta">Book Now →</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section class="amenities" id="amenities">
+  <div class="amenities-inner">
+    <div style="text-align:center;max-width:600px;margin:0 auto">
+      <p class="section-tag reveal">Facilities &amp; Services</p>
+      <h2 class="section-title reveal reveal-delay-1" style="text-align:center">Every Comfort,<br><em>Perfectly Crafted</em></h2>
+    </div>
+    <div class="amenities-grid">
+      <div class="amenity reveal"><div class="amenity-icon">🌿</div><div class="amenity-name">Serenity Spa</div><div class="amenity-desc">Full-service spa with signature massages, facials, steam room, and hydrotherapy pools.</div></div>
+      <div class="amenity reveal reveal-delay-1"><div class="amenity-icon">🍽️</div><div class="amenity-name">Fine Dining</div><div class="amenity-desc">Four curated restaurants — from West African cuisine to international fine dining and rooftop cocktails.</div></div>
+      <div class="amenity reveal reveal-delay-2"><div class="amenity-icon">🏊</div><div class="amenity-name">Infinity Pool</div><div class="amenity-desc">A breathtaking rooftop infinity pool with panoramic views, poolside bar, and private cabanas.</div></div>
+      <div class="amenity reveal reveal-delay-3"><div class="amenity-icon">💪</div><div class="amenity-name">Fitness Centre</div><div class="amenity-desc">State-of-the-art equipment, personal trainers, yoga studio, and wellness coaching programs.</div></div>
+      <div class="amenity reveal"><div class="amenity-icon">🎪</div><div class="amenity-name">Event Spaces</div><div class="amenity-desc">Premium ballrooms and conference rooms for weddings, corporate events, and private celebrations.</div></div>
+      <div class="amenity reveal reveal-delay-1"><div class="amenity-icon">🚗</div><div class="amenity-name">Valet &amp; Transfer</div><div class="amenity-desc">Complimentary valet parking, luxury airport transfers, and 24/7 chauffeur service.</div></div>
+      <div class="amenity reveal reveal-delay-2"><div class="amenity-icon">🍳</div><div class="amenity-name">Room Service</div><div class="amenity-desc">24-hour in-room dining with an extensive menu crafted by award-winning executive chefs.</div></div>
+      <div class="amenity reveal reveal-delay-3"><div class="amenity-icon">📶</div><div class="amenity-name">Business Lounge</div><div class="amenity-desc">High-speed WiFi, executive lounge, private meeting pods, and concierge business support.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE STRIP -->
+<div class="experience">
+  <div class="experience-inner reveal">
+    <p class="section-tag">The Aurum Promise</p>
+    <h2 class="section-title">An Experience<br><em>Unlike Any Other</em></h2>
+    <p>Every stay at Aurum Grand is a personal story — written in the language of uncompromising elegance, warm service, and unforgettable moments.</p>
+    <a href="#contact" class="btn-primary">Plan Your Visit</a>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-inner">
+    <div class="gallery-header reveal">
+      <div>
+        <p class="section-tag">Visual Journey</p>
+        <h2 class="section-title">Life at <em>Aurum Grand</em></h2>
+      </div>
+      <a href="#" style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--gold);padding-bottom:2px">View All Photos</a>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="gallery-item"><div class="gallery-bg gallery-bg-1">❧</div><div class="gallery-overlay"><span>Presidential Suite</span></div></div>
+      <div class="gallery-item"><div class="gallery-bg gallery-bg-2">✦</div><div class="gallery-overlay"><span>Infinity Pool</span></div></div>
+      <div class="gallery-item"><div class="gallery-bg gallery-bg-3">❦</div><div class="gallery-overlay"><span>Serenity Spa</span></div></div>
+      <div class="gallery-item"><div class="gallery-bg gallery-bg-4">✧</div><div class="gallery-overlay"><span>Fine Dining</span></div></div>
+      <div class="gallery-item"><div class="gallery-bg gallery-bg-5">✦</div><div class="gallery-overlay"><span>Lobby</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="testimonials-inner">
+    <p class="section-tag reveal">Guest Reviews</p>
+    <h2 class="section-title reveal reveal-delay-1" style="text-align:center">Words from Our<br><em>Valued Guests</em></h2>
+    <div class="testimonials-slider reveal">
+      <div class="testimonial-track" id="testimonialTrack">
+        <div class="testimonial-slide">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-quote">Aurum Grand exceeded every expectation. The Presidential Suite felt like a private palace — the service, the food, the ambiance — absolutely everything was flawless. We will return without question.</p>
+          <div class="testimonial-author"><span class="testimonial-name">Adaeze & Emeka Okafor</span><span class="testimonial-origin">Lagos, Nigeria</span></div>
+        </div>
+        <div class="testimonial-slide">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-quote">From the moment I arrived, I felt like royalty. The spa treatment was divine, the rooftop pool at sunset is something I'll never forget. The staff remembered my preferences from day one — remarkable.</p>
+          <div class="testimonial-author"><span class="testimonial-name">Dr. Sarah Mitchell</span><span class="testimonial-origin">London, United Kingdom</span></div>
+        </div>
+        <div class="testimonial-slide">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-quote">We hosted our wedding reception at Aurum Grand and it was pure magic. The event team handled every detail with such grace and precision. Our guests are still talking about it months later.</p>
+          <div class="testimonial-author"><span class="testimonial-name">Chidi & Amara Nwosu</span><span class="testimonial-origin">Abuja, Nigeria</span></div>
+        </div>
+        <div class="testimonial-slide">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-quote">I travel frequently for business and Aurum Grand stands among the finest hotels I've stayed at globally. The business lounge, the connectivity, the room comfort — all world-class.</p>
+          <div class="testimonial-author"><span class="testimonial-name">James Thornton</span><span class="testimonial-origin">New York, USA</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slider-arrows">
+      <button class="arrow" onclick="prevSlide()">←</button>
+      <button class="arrow" onclick="nextSlide()">→</button>
+    </div>
+    <div class="slider-dots" id="sliderDots"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <p class="section-tag reveal">Get in Touch</p>
+      <h2 class="section-title reveal reveal-delay-1">We'd Love to<br><em>Hear from You</em></h2>
+      <div class="divider reveal reveal-delay-2"></div>
+      <p class="section-desc reveal reveal-delay-3">Whether you're planning a stay, an event, or simply have a question — our dedicated team is always here to assist.</p>
+      <div class="contact-items">
+        <div class="contact-item reveal">
+          <div class="contact-item-icon">📍</div>
+          <div class="contact-item-text"><h4>Address</h4><p>12 Aba Road, GRA Phase II<br>Port Harcourt, Rivers State, Nigeria</p></div>
+        </div>
+        <div class="contact-item reveal reveal-delay-1">
+          <div class="contact-item-icon">📞</div>
+          <div class="contact-item-text"><h4>Phone</h4><p>+234 (084) 234-5678<br>+234 (0) 803 456 7890</p></div>
+        </div>
+        <div class="contact-item reveal reveal-delay-2">
+          <div class="contact-item-icon">✉️</div>
+          <div class="contact-item-text"><h4>Email</h4><p>reservations@aurumgrand.ng<br>events@aurumgrand.ng</p></div>
+        </div>
+        <div class="contact-item reveal reveal-delay-3">
+          <div class="contact-item-icon">🕐</div>
+          <div class="contact-item-text"><h4>Front Desk</h4><p>Open 24 Hours · 7 Days a Week</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <p class="section-tag" style="margin-bottom:1rem">Send a Message</p>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input type="text" placeholder="John"/></div>
+        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Doe"/></div>
+      </div>
+      <div class="form-group"><label>Email Address</label><input type="email" placeholder="john@example.com"/></div>
+      <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+234 xxx xxx xxxx"/></div>
+      <div class="form-group">
+        <label>Subject</label>
+        <select>
+          <option>Room Reservation</option>
+          <option>Event Enquiry</option>
+          <option>Restaurant Booking</option>
+          <option>Spa Appointment</option>
+          <option>General Enquiry</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Message</label><textarea placeholder="Tell us how we can help you..."></textarea></div>
+      <button class="btn-primary" style="width:100%;display:block;text-align:center;padding:1.1rem;font-size:0.8rem;letter-spacing:0.2em" onclick="handleContact()">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Aurum Grand</div>
+      <p>A timeless luxury hotel where every detail is an expression of grace, every stay a cherished memory, and every guest a treasured friend.</p>
+      <div class="socials">
+        <a href="#" class="social-btn">𝕏</a>
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">ig</a>
+        <a href="#" class="social-btn">fb</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Hotel</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#rooms">Rooms &amp; Suites</a></li>
+        <li><a href="#amenities">Amenities</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Experiences</h4>
+      <ul>
+        <li><a href="#">Fine Dining</a></li>
+        <li><a href="#">Serenity Spa</a></li>
+        <li><a href="#">Infinity Pool</a></li>
+        <li><a href="#">Events &amp; Weddings</a></li>
+        <li><a href="#">Business Lounge</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Policies</h4>
+      <ul>
+        <li><a href="#">Booking Policy</a></li>
+        <li><a href="#">Cancellation</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Accessibility</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Aurum Grand Hotel. All rights reserved.</span>
+    <span style="color:var(--gold-light);font-family:var(--font-display);font-style:italic">Where Luxury Meets Serenity</span>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ROOM MODAL -->
+<div class="modal-overlay" id="roomModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <p class="section-tag" id="modalTag">Accommodations</p>
+    <h3 class="modal-title" id="modalTitle">Room Name</h3>
+    <p class="modal-sub" id="modalPrice"></p>
+    <p style="color:var(--text-muted);font-size:0.9rem;line-height:1.8;margin-bottom:2rem" id="modalDesc"></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem">
+      <div class="form-group"><label>Check In</label><input type="date"/></div>
+      <div class="form-group"><label>Check Out</label><input type="date"/></div>
+    </div>
+    <div class="form-group" style="margin-bottom:2rem"><label>Guests</label>
+      <select><option>1 Adult</option><option>2 Adults</option><option>2 Adults, 1 Child</option></select>
+    </div>
+    <button class="btn-primary" style="width:100%;text-align:center;padding:1.1rem;font-size:0.8rem;letter-spacing:0.2em" onclick="confirmBooking()">Confirm Reservation</button>
+  </div>
+</div>
+
+<!-- SUCCESS TOAST -->
+<div id="toast" style="position:fixed;bottom:6rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--brown);color:var(--cream);padding:1rem 2rem;border-radius:2px;font-size:0.85rem;opacity:0;pointer-events:none;transition:all 0.4s;z-index:3000;white-space:nowrap;border-left:3px solid var(--gold)"></div>
+
+<script>
+// NAV SCROLL
+const nav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',window.scrollY>80);
+  document.getElementById('backTop').classList.toggle('visible',window.scrollY>400);
+});
+
+// MOBILE MENU
+function openMobile(){document.getElementById('mobileMenu').classList.add('open');document.body.style.overflow='hidden'}
+function closeMobile(){document.getElementById('mobileMenu').classList.remove('open');document.body.style.overflow=''}
+
+// SCROLL REVEAL
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// TESTIMONIAL SLIDER
+let current=0;
+const slides=document.querySelectorAll('.testimonial-slide');
+const track=document.getElementById('testimonialTrack');
+const dotsContainer=document.getElementById('sliderDots');
+slides.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='dot'+(i===0?' active':'');
+  d.onclick=()=>goSlide(i);
+  dotsContainer.appendChild(d);
+});
+function goSlide(n){
+  current=n;
+  track.style.transform=`translateX(-${n*100}%)`;
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n));
+}
+function nextSlide(){goSlide((current+1)%slides.length)}
+function prevSlide(){goSlide((current-1+slides.length)%slides.length)}
+setInterval(nextSlide,5000);
+
+// MODAL
+function openRoomModal(name,desc,price){
+  document.getElementById('modalTitle').textContent=name;
+  document.getElementById('modalDesc').textContent=desc;
+  document.getElementById('modalPrice').textContent=`Starting from ${price} per night`;
+  document.getElementById('roomModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('roomModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.getElementById('roomModal').addEventListener('click',function(e){
+  if(e.target===this)closeModal();
+});
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.opacity='1';t.style.transform='translateX(-50%) translateY(0)';
+  setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(-50%) translateY(20px)'},3500);
+}
+function confirmBooking(){closeModal();showToast('✓  Reservation request submitted — we\'ll contact you shortly!')}
+function handleBooking(){showToast('✓  Checking availability for your selected dates...')}
+function handleContact(){showToast('✓  Message sent! We\'ll respond within 24 hours.')}
+
+// DATE DEFAULTS
+const today=new Date().toISOString().split('T')[0];
+const tmrw=new Date(Date.now()+86400000).toISOString().split('T')[0];
+document.getElementById('checkIn').value=today;
+document.getElementById('checkOut').value=tmrw;
+</script>
+</body>
+</html>
